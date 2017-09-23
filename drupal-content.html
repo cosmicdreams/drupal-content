@@ -1,0 +1,55 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="drupal-content-element.html">
+
+<dom-module id="drupal-content">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <iron-ajax auto="" url="[[url]]" handle-as="json" last-response="{{ajaxResponse}}"></iron-ajax>
+
+   <!-- <template is="dom-repeat" items="[[ajaxResponse.data]]">
+      <h2>[[item.attributes.title]]</h2>
+      <div>[[item.attributes.field_body.value]]</div>
+    </template>-->
+
+    <paper-card heading="[[ajaxResponse.data.attributes.title]]" alt="[[ajaxResponse.data.attributes.title]]">
+      <div class="card-content">
+        [[ajaxResponse.data.attributes.field_body.value]]
+      </div>
+    </paper-card>
+
+  </template>
+
+  <script>
+    /**
+     * `drupal-content`
+     * Displays remote drupal content.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class DrupalContent extends Polymer.Element {
+      static get is() { return 'drupal-content'; }
+      static get properties() {
+        return {
+          url: {
+            type: String,
+            value: 'http://local.drupal-data.com/jsonapi/node/article/285f7d54-9899-42cb-a9ec-c384aa29eabc'
+          }
+        };
+      }
+    }
+
+    function stripTags(markup) {
+        return markup.replace(/<\/?[^>]+>/gi, '')
+    }
+
+    window.customElements.define(DrupalContent.is, DrupalContent);
+  </script>
+</dom-module>

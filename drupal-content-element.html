@@ -1,0 +1,45 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="drupal-content">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <pre>[[markup]]</pre>
+
+    <div>
+      [[stripTags(markup)]]
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * `drupal-content-element`
+     * Wraps a content element.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class DrupalContentElement extends Polymer.Element {
+      static get is() { return 'drupal-content-element'; }
+      static get properties() {
+        return {
+          markup: {
+            type: String,
+            value: '<p>test data</p>'
+          }
+        };
+      }
+    }
+
+    function stripTags(markup) {
+        return markup.replace(/<\/?[^>]+>/gi, '')
+    }
+    window.customElements.define(DrupalContentElement.is, DrupalContentElement);
+  </script>
+</dom-module>
